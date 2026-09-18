@@ -12,6 +12,11 @@ See NASA's Astronomy Picture of the Day from every birthday you've had.
 
 Usage:
   node index.js YYYY-MM-DD
+  node index.js YYYY-MM-DD --markdown
+
+Output:
+  JSON is the default machine-readable format.
+  --markdown emits portable Markdown for AI/chat rendering.
 
 Optional fallback key:
   NASA_API_KEY=your_key node index.js YYYY-MM-DD
@@ -338,12 +343,44 @@ async function getApod(date) {
   }
 }
 
-async function main() {
-  const birthday = process.argv[2];
+function escapeMarkdown(value) {
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/([*_[\]<>])/g, "\\$1");
+}
 
-  if (!birthday || birthday === "--help" || birthday === "-h") {
+function renderMarkdown(results) {
+  const blocks = results.map((item) => {
+    const heading = `## Age ${item.age} · ${item.year}`;
+    const title = `**${escapeMarkdown(item.title)}**`;
+    const image = item.image_url
+      ? `![${escapeMarkdown(item.title)}](${item.image_url})`
+      : `[Open this APOD on NASA](${item.apod_url})`;
+    const source = `[NASA APOD](${item.apod_url})`;
+
+    return [heading, title, image, source].join("\n\n");
+  });
+
+  return ["# birfday", ...blocks].join("\n\n");
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const helpRequested = args.includes("--help") || args.includes("-h");
+  const markdown = args.includes("--markdown");
+  const unknownFlags = args.filter(
+    (arg) => arg.startsWith("-") && !["--markdown", "--json", "--help", "-h"].includes(arg)
+  );
+  const birthday = args.find((arg) => !arg.startsWith("-"));
+
+  if (helpRequested || !birthday) {
     usage();
-    process.exit(birthday ? 0 : 1);
+    process.exit(helpRequested ? 0 : 1);
+  }
+
+  if (unknownFlags.length) {
+    console.error(`Unknown option: ${unknownFlags.join(", ")}`);
+    process.exit(1);
   }
 
   if (!isRealDate(birthday)) {
@@ -393,7 +430,11 @@ async function main() {
     }
   }
 
-  console.log(JSON.stringify(results, null, 2));
+  if (markdown) {
+    console.log(renderMarkdown(results));
+  } else {
+    console.log(JSON.stringify(results, null, 2));
+  }
 }
 
 main().catch((error) => {
