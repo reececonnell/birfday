@@ -349,9 +349,18 @@ function escapeMarkdown(value) {
     .replace(/([*_[\]<>])/g, "\\$1");
 }
 
+function formatDisplayDate(dateString) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(new Date(`${dateString}T00:00:00Z`));
+}
+
 function renderMarkdown(results) {
   const blocks = results.map((item) => {
-    const heading = `## Age ${item.age} · ${item.year}`;
+    const heading = `## Age ${item.age} · ${formatDisplayDate(item.date)}`;
     const title = `**${escapeMarkdown(item.title)}**`;
     const image = item.image_url
       ? `![${escapeMarkdown(item.title)}](${item.image_url})`
