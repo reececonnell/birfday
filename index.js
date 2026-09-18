@@ -12,11 +12,8 @@ See NASA's Astronomy Picture of the Day from every birthday you've had.
 Usage:
   node index.js YYYY-MM-DD
 
-Example:
-  node index.js 1998-09-25
-
 Optional:
-  NASA_API_KEY=your_key node index.js 1998-09-25
+  NASA_API_KEY=your_key node index.js YYYY-MM-DD
 
 If NASA_API_KEY is not set, birfday uses NASA's DEMO_KEY.
 `);
