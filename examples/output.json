@@ -4,15 +4,27 @@
     "age": 0,
     "date": "2000-01-01",
     "title": "Example APOD title",
-    "image_url": "https://example.com/apod-image.jpg",
-    "apod_url": "https://apod.nasa.gov/apod/example.html"
+    "image_url": "https://apod.nasa.gov/apod/image/example.jpg",
+    "apod_url": "https://apod.nasa.gov/apod/ap000101.html",
+    "rights": {
+      "credit": "Example credit",
+      "copyright": null,
+      "license": null
+    },
+    "source": "NASA APOD"
   },
   {
     "year": 2001,
     "age": 1,
     "date": "2001-01-01",
     "title": "Another APOD title",
-    "image_url": "https://example.com/another-apod-image.jpg",
-    "apod_url": "https://apod.nasa.gov/apod/example2.html"
+    "image_url": "https://apod.nasa.gov/apod/image/example2.jpg",
+    "apod_url": "https://apod.nasa.gov/apod/ap010101.html",
+    "rights": {
+      "credit": "Example photographer",
+      "copyright": "Example photographer",
+      "license": null
+    },
+    "source": "NASA APOD"
   }
 ]
