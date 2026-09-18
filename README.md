@@ -1,8 +1,8 @@
 # birfday
 
-**The universe on every one of your birthdays.**
+**The Astronomy Picture of the Day from every birthday you've had.**
 
-Give `birfday` any date of birth. It loops through that same month and day for every year since, asks NASA for the Astronomy Picture of the Day, and returns a clean JSON timeline.
+Give `birfday` any date of birth. It loops through that same month and day for every year since, reads the official NASA APOD archive page for each date, and returns a clean JSON timeline.
 
 ## Run it
 
@@ -20,6 +20,24 @@ npm run birfday -- YYYY-MM-DD
 
 Replace `YYYY-MM-DD` with the birthday you want to run.
 
+No NASA API key is required for normal use.
+
+## Source strategy
+
+`birfday` is archive-first:
+
+```text
+official APOD archive page
+        ↓
+parse title + high-res image + provenance
+        ↓
+clean JSON
+```
+
+If an archive page cannot be read, the script falls back to NASA's APOD API. The fallback uses `DEMO_KEY` unless `NASA_API_KEY` is set.
+
+The archive page remains the canonical `apod_url` in the output.
+
 ## Use with an AI agent
 
 This repo includes `AGENTS.md` with instructions for AI coding agents.
@@ -30,11 +48,11 @@ A simple request is enough:
 Run birfday for my birthday and show me the pictures in chronological order.
 ```
 
-The agent should read `AGENTS.md`, convert the birthday to `YYYY-MM-DD`, run the existing script, and use the returned `image_url` values.
+The agent should convert the birthday to `YYYY-MM-DD`, run the existing script, and use the returned `image_url` values.
 
 ## Output
 
-Each birthday returns records with this shape:
+Each record has this shape:
 
 ```json
 {
@@ -42,14 +60,20 @@ Each birthday returns records with this shape:
   "age": 0,
   "date": "2000-01-01",
   "title": "NASA APOD title",
-  "image_url": "https://...",
-  "apod_url": "https://apod.nasa.gov/apod/..."
+  "image_url": "https://apod.nasa.gov/apod/image/...",
+  "apod_url": "https://apod.nasa.gov/apod/ap000101.html",
+  "rights": {
+    "credit": "Credit as shown by APOD",
+    "copyright": null,
+    "license": null
+  },
+  "source": "NASA APOD"
 }
 ```
 
-The full command prints an array of those records, one for every available birthday.
+`rights` is deliberately flexible. APOD pages use different provenance wording across the archive, including `Credit`, `Image Credit`, `Credit & Copyright`, `Processing & Copyright`, and `Processing & License`.
 
-A sample schema is also available at `examples/output.json`.
+A sample schema is available at `examples/output.json`.
 
 ## The loop
 
@@ -60,16 +84,18 @@ take month + day
   ↓
 for each year from birth year → now
   ↓
-fetch NASA APOD for that date
+build the official APOD archive URL
   ↓
-return year + age + date + title + image + NASA page
+read title + image + rights
+  ↓
+return the birthday timeline
 ```
 
-## NASA API key
+## Optional NASA API key
 
-By default, `birfday` uses NASA's `DEMO_KEY`, which is fine for testing but has a low rate limit.
+You do not need an API key for the normal archive-first path.
 
-For longer birthday histories, get a free key from [NASA Open APIs](https://api.nasa.gov/) and expose it as `NASA_API_KEY`.
+If the archive parser needs the API fallback frequently, you can provide a NASA API key:
 
 macOS / Linux:
 
@@ -86,10 +112,12 @@ node index.js YYYY-MM-DD
 
 ## Rules
 
-- NASA APOD began on **1995-06-16**, so birthdays before then are ignored until APOD exists.
-- If this year's birthday has not happened yet, the loop stops at last year's birthday.
-- A February 29 birthday only returns actual February 29 dates; non-leap years are skipped.
-- If an APOD is a video, `image_url` uses NASA's thumbnail when one is available.
+- NASA APOD began on **1995-06-16**, so dates before then are skipped.
+- If this year's birthday has not happened yet, that future birthday is not requested.
+- A February 29 birthday only returns actual February 29 dates.
+- `image_url` prefers the high-resolution image linked by the APOD page when one exists.
+- Some APOD entries are videos or other media, so `image_url` can be `null`.
+- APOD images are not automatically NASA-owned. Use the `rights` fields and original APOD page when reusing media.
 
 ## Repo shape
 
@@ -103,15 +131,4 @@ birfday/
     └── output.json
 ```
 
-The core record is intentionally small:
-
-```text
-year
-age
-date
-title
-image_url
-apod_url
-```
-
-UI, cards, timelines, sharing and pattern-finding can all be built later on top of this same loop.
+The core record is intentionally small and reusable. UI, cards, timelines, sharing, and other birthday sources can sit on top later.
