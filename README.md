@@ -57,7 +57,7 @@ node index.js YYYY-MM-DD --markdown
 That mode emits portable Markdown containing:
 
 ```text
-Age · Year
+Age · full birthday date
 Title
 Inline image
 NASA APOD link
@@ -68,15 +68,23 @@ AI clients that support remote Markdown images can display the pictures inline. 
 A natural-language request can be as simple as:
 
 ```text
-Run birfday for my birthday and show me the pictures in chronological order.
+Run birfday.
 ```
 
-The agent converts the birthday to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
+If no date is supplied, the AI should ask:
+
+```text
+What date would you like to run?
+```
+
+The date must come from the current user request or follow-up. The repo does not hard-code or infer a birthday. Once supplied, the agent converts it to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
 
 If the user does **not** say how they want the results presented, the recommended AI behavior is:
 
 ```text
-run JSON mode
+date supplied?
+→ no: ask "What date would you like to run?"
+→ yes: run JSON mode
 → report how many birthday APODs were found
 → report earliest + latest year
 → ask: "Want me to render the pictures inline too?"
