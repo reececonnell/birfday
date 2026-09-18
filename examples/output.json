@@ -1,0 +1,18 @@
+[
+  {
+    "year": 2000,
+    "age": 0,
+    "date": "2000-01-01",
+    "title": "Example APOD title",
+    "image_url": "https://example.com/apod-image.jpg",
+    "apod_url": "https://apod.nasa.gov/apod/example.html"
+  },
+  {
+    "year": 2001,
+    "age": 1,
+    "date": "2001-01-01",
+    "title": "Another APOD title",
+    "image_url": "https://example.com/another-apod-image.jpg",
+    "apod_url": "https://apod.nasa.gov/apod/example2.html"
+  }
+]
