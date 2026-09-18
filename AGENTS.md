@@ -28,9 +28,25 @@ It parses the title, direct/high-resolution image when available, and provenance
 
 The NASA APOD API is only a fallback if the archive page cannot be read. Normal runs do not require an API key.
 
-## Output
+## Output modes
 
-The script prints a chronological JSON array. Each record contains:
+Default output is chronological JSON:
+
+```bash
+node index.js YYYY-MM-DD
+```
+
+If the user explicitly asks to **show, render, display, or view the pictures in an AI/chat interface**, use:
+
+```bash
+node index.js YYYY-MM-DD --markdown
+```
+
+The Markdown mode emits headings, titles, inline Markdown image syntax, and the canonical NASA APOD link for each birthday. It is designed to be portable across AI clients that support Markdown rendering.
+
+If the current AI/chat client does not render remote Markdown images, do not fail or rewrite the repo. Show the returned image URLs as clickable links and keep the NASA APOD links.
+
+Each JSON record contains:
 
 - `year`
 - `age`
@@ -51,12 +67,14 @@ When a user asks to run their birthday:
 
 1. Read the birthday from the user's request.
 2. Convert it to `YYYY-MM-DD`.
-3. Run `node index.js YYYY-MM-DD`.
-4. Return the results clearly and chronologically.
-5. If the user asks to see the pictures, render or surface `image_url`.
-6. If the user asks for the NASA source, use `apod_url`.
-7. Preserve the returned rights/provenance when displaying or reusing an image.
-8. Do not modify source code just to change the birthday.
+3. If the user only asks to run/get the data, run `node index.js YYYY-MM-DD`.
+4. If the user asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
+5. Return results chronologically.
+6. Render the Markdown directly when the client supports remote images.
+7. If the client does not render remote images, surface the `image_url` values as clickable links instead.
+8. If the user asks for the NASA source, use `apod_url`.
+9. Preserve the returned rights/provenance when displaying or reusing an image.
+10. Do not modify source code just to change the birthday.
 
 ## Rights and provenance
 
