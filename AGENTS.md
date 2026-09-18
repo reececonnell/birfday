@@ -63,19 +63,20 @@ Do not invent missing provenance. A `null` rights field means the parser did not
 
 ## Agent behavior
 
-When a user asks to run their birthday:
+When a user asks to run birfday:
 
-1. Read the birthday from the user's request.
-2. Convert it to `YYYY-MM-DD`.
-3. If the user explicitly asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
-4. Otherwise run `node index.js YYYY-MM-DD` and return the results or a concise summary of them.
-5. After a normal JSON run, if the user did not specify how they want the results presented, proactively ask: **"Want me to render the pictures inline too?"**
-6. If the user says yes, rerun `node index.js YYYY-MM-DD --markdown`.
-7. Render the Markdown directly when the client supports remote images.
-8. If the client does not render remote images, surface the `image_url` values as clickable links instead.
-9. If the user asks for the NASA source, use `apod_url`.
-10. Preserve the returned rights/provenance when displaying or reusing an image.
-11. Do not modify source code just to change the birthday.
+1. If the user has not supplied a date, ask: **"What date would you like to run?"**
+2. Accept a natural-language date or `YYYY-MM-DD`, then convert it to `YYYY-MM-DD`.
+3. Never infer, remember, or hard-code a user's birthday when they have not supplied it in the current request.
+4. If the user explicitly asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
+5. Otherwise run `node index.js YYYY-MM-DD` and return the results or a concise summary of them.
+6. After a normal JSON run, if the user did not specify how they want the results presented, proactively ask: **"Want me to render the pictures inline too?"**
+7. If the user says yes, rerun `node index.js YYYY-MM-DD --markdown`.
+8. Render the Markdown directly when the client supports remote images.
+9. If the client does not render remote images, surface the `image_url` values as clickable links instead.
+10. If the user asks for the NASA source, use `apod_url`.
+11. Preserve the returned rights/provenance when displaying or reusing an image.
+12. Do not modify source code just to change the birthday.
 
 ## Default interaction pattern
 
@@ -83,6 +84,10 @@ If the user does not specify an output format, use this flow:
 
 ```text
 user asks to run birfday
+        ↓
+date supplied?
+  no  → ask "What date would you like to run?"
+  yes → continue
         ↓
 run JSON mode
         ↓
