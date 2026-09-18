@@ -73,6 +73,18 @@ Run birfday for my birthday and show me the pictures in chronological order.
 
 The agent converts the birthday to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
 
+If the user does **not** say how they want the results presented, the recommended AI behavior is:
+
+```text
+run JSON mode
+→ report how many birthday APODs were found
+→ report earliest + latest year
+→ ask: "Want me to render the pictures inline too?"
+→ if yes, rerun with --markdown
+```
+
+That follow-up is handled by the AI agent, not by an interactive terminal prompt, so the repo remains safe to run in non-interactive environments.
+
 ## Output
 
 Each record has this shape:
