@@ -2,34 +2,36 @@
 
 **The universe on every one of your birthdays.**
 
-Give `birfday` a date of birth. It loops through that same month and day for every year since, asks NASA for the Astronomy Picture of the Day, and returns a clean JSON timeline.
+Give `birfday` any date of birth. It loops through that same month and day for every year since, asks NASA for the Astronomy Picture of the Day, and returns a clean JSON timeline.
 
 ## Run it
 
 Requires Node.js 18+.
 
 ```bash
-node index.js 1998-09-25
+node index.js YYYY-MM-DD
 ```
 
 Or:
 
 ```bash
-npm run birfday -- 1998-09-25
+npm run birfday -- YYYY-MM-DD
 ```
+
+Replace `YYYY-MM-DD` with the birthday you want to run.
 
 ## Output
 
-Each birthday returns:
+Each birthday returns records with this shape:
 
 ```json
 {
-  "year": 1998,
+  "year": 2000,
   "age": 0,
-  "date": "1998-09-25",
-  "title": "Twin Proto-Planetary Disks",
+  "date": "2000-01-01",
+  "title": "NASA APOD title",
   "image_url": "https://...",
-  "apod_url": "https://apod.nasa.gov/apod/ap980925.html"
+  "apod_url": "https://apod.nasa.gov/apod/..."
 }
 ```
 
@@ -58,14 +60,14 @@ For longer birthday histories, get a free key from [NASA Open APIs](https://api.
 macOS / Linux:
 
 ```bash
-NASA_API_KEY=your_key node index.js 1998-09-25
+NASA_API_KEY=your_key node index.js YYYY-MM-DD
 ```
 
 PowerShell:
 
 ```powershell
 $env:NASA_API_KEY="your_key"
-node index.js 1998-09-25
+node index.js YYYY-MM-DD
 ```
 
 ## Rules
