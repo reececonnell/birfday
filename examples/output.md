@@ -1,6 +1,6 @@
 # birfday
 
-## Age 0 · 2000
+## Age 0 · 1 January 2000
 
 **Example APOD title**
 
@@ -8,7 +8,7 @@
 
 [NASA APOD](https://apod.nasa.gov/apod/ap000101.html)
 
-## Age 1 · 2001
+## Age 1 · 1 January 2001
 
 **Another APOD title**
 
