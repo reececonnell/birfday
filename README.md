@@ -71,19 +71,19 @@ A natural-language request can be as simple as:
 Run birfday.
 ```
 
-If no date is supplied, the AI should ask:
+If no birthday is supplied, the AI should ask:
 
 ```text
-What date would you like to run?
+What's your birthday?
 ```
 
-The date must come from the current user request or follow-up. The repo does not hard-code or infer a birthday. Once supplied, the agent converts it to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
+The birthday must come from the current user request or follow-up. The repo does not hard-code or infer a birthday. Once supplied, the agent converts it to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
 
 If the user does **not** say how they want the results presented, the recommended AI behavior is:
 
 ```text
-date supplied?
-→ no: ask "What date would you like to run?"
+birthday supplied?
+→ no: ask "What's your birthday?"
 → yes: run JSON mode
 → report how many birthday APODs were found
 → report earliest + latest year
