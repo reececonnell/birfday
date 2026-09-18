@@ -96,7 +96,7 @@ Each record has this shape:
 
 `rights` is deliberately flexible. APOD pages use different provenance wording across the archive, including `Credit`, `Image Credit`, `Credit & Copyright`, `Processing & Copyright`, and `Processing & License`.
 
-A sample schema is available at `examples/output.json`.
+Sample outputs are available at `examples/output.json` and `examples/output.md`.
 
 ## The loop
 
@@ -151,7 +151,8 @@ birfday/
 ├── index.js
 ├── package.json
 └── examples/
-    └── output.json
+    ├── output.json
+    └── output.md
 ```
 
 The core record is intentionally small and reusable. JSON remains the data layer; Markdown is only a presentation layer for AI/chat clients. UI, cards, timelines, sharing, and other birthday sources can sit on top later.
