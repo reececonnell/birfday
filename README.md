@@ -40,15 +40,38 @@ The archive page remains the canonical `apod_url` in the output.
 
 ## Use with an AI agent
 
-This repo includes `AGENTS.md` with instructions for AI coding agents.
+This repo includes `AGENTS.md` with portable instructions for AI coding agents.
 
-A simple request is enough:
+Default machine-readable output:
+
+```bash
+node index.js YYYY-MM-DD
+```
+
+If the user asks to **show or render the pictures in an AI/chat interface**, use:
+
+```bash
+node index.js YYYY-MM-DD --markdown
+```
+
+That mode emits portable Markdown containing:
+
+```text
+Age · Year
+Title
+Inline image
+NASA APOD link
+```
+
+AI clients that support remote Markdown images can display the pictures inline. Clients that do not should show the returned image URLs as clickable links instead.
+
+A natural-language request can be as simple as:
 
 ```text
 Run birfday for my birthday and show me the pictures in chronological order.
 ```
 
-The agent should convert the birthday to `YYYY-MM-DD`, run the existing script, and use the returned `image_url` values.
+The agent converts the birthday to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
 
 ## Output
 
@@ -131,4 +154,4 @@ birfday/
     └── output.json
 ```
 
-The core record is intentionally small and reusable. UI, cards, timelines, sharing, and other birthday sources can sit on top later.
+The core record is intentionally small and reusable. JSON remains the data layer; Markdown is only a presentation layer for AI/chat clients. UI, cards, timelines, sharing, and other birthday sources can sit on top later.
