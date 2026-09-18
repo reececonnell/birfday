@@ -20,6 +20,18 @@ npm run birfday -- YYYY-MM-DD
 
 Replace `YYYY-MM-DD` with the birthday you want to run.
 
+## Use with an AI agent
+
+This repo includes `AGENTS.md` with instructions for AI coding agents.
+
+A simple request is enough:
+
+```text
+Run birfday for my birthday and show me the pictures in chronological order.
+```
+
+The agent should read `AGENTS.md`, convert the birthday to `YYYY-MM-DD`, run the existing script, and use the returned `image_url` values.
+
 ## Output
 
 Each birthday returns records with this shape:
@@ -36,6 +48,8 @@ Each birthday returns records with this shape:
 ```
 
 The full command prints an array of those records, one for every available birthday.
+
+A sample schema is also available at `examples/output.json`.
 
 ## The loop
 
@@ -77,7 +91,17 @@ node index.js YYYY-MM-DD
 - A February 29 birthday only returns actual February 29 dates; non-leap years are skipped.
 - If an APOD is a video, `image_url` uses NASA's thumbnail when one is available.
 
-## Current shape
+## Repo shape
+
+```text
+birfday/
+├── README.md
+├── AGENTS.md
+├── index.js
+├── package.json
+└── examples/
+    └── output.json
+```
 
 The core record is intentionally small:
 
