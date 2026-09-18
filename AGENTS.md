@@ -65,7 +65,7 @@ Do not invent missing provenance. A `null` rights field means the parser did not
 
 When a user asks to run birfday:
 
-1. If the user has not supplied a date, ask: **"What date would you like to run?"**
+1. If the user has not supplied a date, ask: **"What's your birthday?"**
 2. Accept a natural-language date or `YYYY-MM-DD`, then convert it to `YYYY-MM-DD`.
 3. Never infer, remember, or hard-code a user's birthday when they have not supplied it in the current request.
 4. If the user explicitly asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
@@ -85,8 +85,8 @@ If the user does not specify an output format, use this flow:
 ```text
 user asks to run birfday
         ↓
-date supplied?
-  no  → ask "What date would you like to run?"
+birthday supplied?
+  no  → ask "What's your birthday?"
   yes → continue
         ↓
 run JSON mode
