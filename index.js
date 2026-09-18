@@ -287,7 +287,7 @@ async function fetchArchive(date) {
   const pageUrl = apodPageUrl(date);
   const response = await fetch(pageUrl, {
     headers: {
-      "user-agent": "birfday/0.2 (+https://github.com/reececonnell/birfday)"
+      "user-agent": "birfday/0.3 (+https://github.com/reececonnell/birfday)"
     }
   });
 
