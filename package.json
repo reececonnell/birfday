@@ -1,0 +1,14 @@
+{
+  "name": "birfday",
+  "version": "0.1.0",
+  "private": true,
+  "description": "See NASA's Astronomy Picture of the Day from every birthday you've had.",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "birfday": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
