@@ -67,14 +67,36 @@ When a user asks to run their birthday:
 
 1. Read the birthday from the user's request.
 2. Convert it to `YYYY-MM-DD`.
-3. If the user only asks to run/get the data, run `node index.js YYYY-MM-DD`.
-4. If the user asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
-5. Return results chronologically.
-6. Render the Markdown directly when the client supports remote images.
-7. If the client does not render remote images, surface the `image_url` values as clickable links instead.
-8. If the user asks for the NASA source, use `apod_url`.
-9. Preserve the returned rights/provenance when displaying or reusing an image.
-10. Do not modify source code just to change the birthday.
+3. If the user explicitly asks to see/render/display the pictures in the AI or chat, run `node index.js YYYY-MM-DD --markdown`.
+4. Otherwise run `node index.js YYYY-MM-DD` and return the results or a concise summary of them.
+5. After a normal JSON run, if the user did not specify how they want the results presented, proactively ask: **"Want me to render the pictures inline too?"**
+6. If the user says yes, rerun `node index.js YYYY-MM-DD --markdown`.
+7. Render the Markdown directly when the client supports remote images.
+8. If the client does not render remote images, surface the `image_url` values as clickable links instead.
+9. If the user asks for the NASA source, use `apod_url`.
+10. Preserve the returned rights/provenance when displaying or reusing an image.
+11. Do not modify source code just to change the birthday.
+
+## Default interaction pattern
+
+If the user does not specify an output format, use this flow:
+
+```text
+user asks to run birfday
+        ↓
+run JSON mode
+        ↓
+briefly say how many birthday APODs were found
+and the earliest + latest year
+        ↓
+ask:
+"Want me to render the pictures inline too?"
+        ↓
+yes → rerun with --markdown
+no  → stop
+```
+
+Do not make the CLI itself pause for input. The AI agent should handle this follow-up so the repo stays compatible with non-interactive environments.
 
 ## Rights and provenance
 
