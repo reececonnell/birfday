@@ -1,6 +1,6 @@
 # birfday
 
-**The Astronomy Picture of the Day from every birthday you've had.**
+**See the universe from every birthday you’ve had.**
 
 Give `birfday` any date of birth. It loops through that same month and day for every year since, reads the official NASA APOD archive page for each date, and returns a clean JSON timeline.
 
@@ -74,7 +74,7 @@ Run birfday.
 If no birthday is supplied, the AI should ask:
 
 ```text
-What's your birthday?
+See the universe from every birthday you’ve had. What’s your birthday?
 ```
 
 The birthday must come from the current user request or follow-up. The repo does not hard-code or infer a birthday. Once supplied, the agent converts it to `YYYY-MM-DD` and chooses JSON or Markdown based on what the user asked to see.
